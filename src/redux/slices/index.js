@@ -1,2 +1,3 @@
-export { contactsSlice } from './contactsSlice';
-export { filterSlice } from './filterSlice';
+export { contactsSlice, contactsRreducer } from './contactsSlice';
+export { filterSlice, filterReducer } from './filterSlice';
+export { persistConfig } from './persistConfig';
