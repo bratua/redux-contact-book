@@ -136,12 +136,8 @@ export class App extends PureComponent {
 
     return (
       <AppStyled>
-        <IconButton
-          className="add-button"
-          type="button"
-          onClick={this.toggleModal}
-        >
-          {BUTTON_ICONS.addIcon}
+        <IconButton type="button" onClick={this.toggleModal}>
+          {BUTTON_ICONS.addIcon} ADD
         </IconButton>
 
         {showModal ? (

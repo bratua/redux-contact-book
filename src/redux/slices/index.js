@@ -1,1 +1,2 @@
-export { contactsSlice, filterSlice } from './slices';
+export { contactsSlice } from './contactsSlice';
+export { filterSlice } from './filterSlice';

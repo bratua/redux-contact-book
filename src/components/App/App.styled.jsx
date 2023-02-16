@@ -5,9 +5,4 @@ export const AppStyled = styled.div`
   padding: 20px;
   width: 600px;
   background-color: bisque;
-
-  .add-button {
-    background-color: green;
-    border-radius: 10px;
-  }
 `;
