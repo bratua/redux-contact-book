@@ -1,7 +1,7 @@
 // import Box from 'components/Box/Box';
 import { PureComponent } from 'react';
 import { BackDrop, ModalWindow, ModalTitle } from './Modal.styled';
-import { Editor } from 'components/Editor';
+import { EditorRedux } from 'components/Editor';
 import editorContext from '../Context/editor-context';
 import { FiXCircle } from 'react-icons/fi';
 
@@ -27,7 +27,7 @@ export class Modal extends PureComponent {
   };
 
   render() {
-    const { typeCloseButton, close } = this.props;
+    const { typeCloseButton, close, editorOption } = this.props;
     // console.log(theme);
     return (
       <BackDrop onClick={this.backDropClickClose}>
@@ -40,18 +40,14 @@ export class Modal extends PureComponent {
             <FiXCircle size="30" />
           </button>
 
-          <editorContext.Consumer>
-            {editorContext => (
-              <>
-                <ModalTitle>{editorContext.modalName}</ModalTitle>
-                <Editor
-                  initialValues={editorContext.initialValues}
-                  onSubmitForm={editorContext.onSubmitForm}
-                  icon={editorContext.buttonIcon}
-                />
-              </>
-            )}
-          </editorContext.Consumer>
+          <>
+            <ModalTitle>{editorOption.modalName}</ModalTitle>
+            <EditorRedux
+              initialValues={editorOption.initialValues}
+              updateData={editorOption.onSubmitForm}
+              icon={editorOption.buttonIcon}
+            />
+          </>
         </ModalWindow>
       </BackDrop>
     );

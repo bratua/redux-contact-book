@@ -7,13 +7,19 @@ import { Filter } from 'components/PhoneBook/Filter';
 import { IconButton } from 'components/Button';
 import { ContactItem } from 'components/PhoneBook/ContactsList';
 
-export const ContactsListRedux = ({ icons: { editIcon, deleteIcon } }) => {
+export const ContactsListRedux = ({
+  icons: { editIcon, deleteIcon },
+  contacts,
+  getContactToEdit,
+  filterChange,
+}) => {
   const dispatch = useDispatch();
   //   console.log('icons', editIcon, deleteIcon);
-  const contacts = useSelector(state => state.contacts.contactsData);
-  console.log('contacts', contacts);
+  const filterValue = useSelector(state => state.filter.filterData);
+  console.log('filterValue', filterValue);
+  console.log('filterChange', filterChange);
 
-  const isContactsEmpty = contacts.length === 0;
+  const isContactsEmpty = contacts.length === 0 && filterValue.length === 0;
   // contacts.length === 0 && this.props.filterValue.length === 0;
   //   console.log('isContactsEmpty', isContactsEmpty);
 
@@ -26,20 +32,15 @@ export const ContactsListRedux = ({ icons: { editIcon, deleteIcon } }) => {
         <IconButton onClick={() => dispatch(deleteContact(id))}>
           {deleteIcon}
         </IconButton>
-        <IconButton onClick={() => dispatch(editContact(id))}>
-          {editIcon}
-        </IconButton>
-        <ContactItem name={name} number={number} />
+        <IconButton onClick={() => getContactToEdit(id)}>{editIcon}</IconButton>
+        <ContactItem name={name} number={number} id={id} />
       </StyledContactsLi>
     ));
   };
 
   const contactsBlock = (
     <Section title="Contacts List">
-      {/* <Filter
-        value={this.props.filterValue}
-        onChange={this.props.filterOnChange}
-      /> */}
+      <Filter value={filterValue} onChange={filterChange} />
       <StyledContactsUl>{renderContacts(contacts)}</StyledContactsUl>
       {contactFound || <Notification message="Not found" />}
     </Section>

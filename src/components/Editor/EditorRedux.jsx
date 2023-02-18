@@ -2,12 +2,12 @@ import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import { nanoid } from 'nanoid';
 import { IconButton } from 'components/Button';
-import { useDispatch, useSelector } from 'react-redux';
 import { TitleFields, Fields, ErrorStyled } from './Editor.styled';
 
-import { addContact } from 'redux/slices/contactsSlice';
+const nameId = nanoid();
+const numberId = nanoid();
 
-export const EditorRedux = ({ icon }) => {
+export const EditorRedux = ({ icon, initialValues, updateData }) => {
   const schema = yup.object().shape({
     name: yup
       .string()
@@ -21,20 +21,8 @@ export const EditorRedux = ({ icon }) => {
       .required('Введите номер'),
   });
 
-  const nameId = nanoid();
-  const numberId = nanoid();
-
-  const initialValues = {
-    name: '',
-    number: '',
-  };
-
-  const dispatch = useDispatch();
-
-  const handleSubmit = ({ name, number }, actionsFormik) => {
-    dispatch(addContact({ name, number, id: nanoid() }));
-    // console.log('event', { name, number });
-    // console.log('actionsFormik', actionsFormik);
+  const handleSubmit = ({ name, number, id }, actionsFormik) => {
+    updateData({ name, number, id }); //function from APP (add or edit)
     actionsFormik.resetForm();
   };
 

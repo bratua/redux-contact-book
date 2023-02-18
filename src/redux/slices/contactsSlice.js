@@ -16,20 +16,17 @@ export const contactsSlice = createSlice({
         contact => contact.id === action.payload
       );
       state.contactsData.splice(indexToDelete, 1);
-      return;
     },
 
-    editContact: (state, action) =>
-      state.contactsData.map(contact => {
-        if (contact.id !== action.payload.id) {
-          return contact;
-        }
-        return {
-          name: action.payload.name,
-          number: action.payload.number,
-          id: action.payload.id,
-        };
-      }),
+    editContact: (state, action) => {
+      const indexToUpdate = state.contactsData.findIndex(
+        contact => contact.id === action.payload.id
+      );
+      console.log('indexToUpdate', indexToUpdate);
+      console.log('editContact', action.payload);
+
+      state.contactsData.splice(indexToUpdate, 1, action.payload);
+    },
   },
 });
 

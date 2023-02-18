@@ -1,7 +1,7 @@
 import { ContactStyled } from './ContactItem.styled';
 
-export const ContactItem = ({ name, number }) => (
+export const ContactItem = ({ name, number, id }) => (
   <ContactStyled>
-    {name}: {number}
+    {name}: {number} (id: {id})
   </ContactStyled>
 );
