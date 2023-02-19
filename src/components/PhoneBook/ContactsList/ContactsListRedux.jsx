@@ -6,33 +6,31 @@ import { Notification } from 'components/PhoneBook/Notification';
 import { Filter } from 'components/PhoneBook/Filter';
 import { IconButton } from 'components/Button';
 import { ContactItem } from 'components/PhoneBook/ContactsList';
+import { BUTTON_ICONS } from 'constants/constants';
 
-export const ContactsListRedux = ({
-  icons: { editIcon, deleteIcon },
-  contacts,
-  getContactToEdit,
-  filterChange,
-}) => {
+export const ContactsListRedux = ({ getContactToEdit }) => {
   const dispatch = useDispatch();
-  //   console.log('icons', editIcon, deleteIcon);
+  const contacts = useSelector(state => state.contacts.contactsData);
   const filterValue = useSelector(state => state.filter.filterData);
-  console.log('filterValue', filterValue);
-  console.log('filterChange', filterChange);
-
   const isContactsEmpty = contacts.length === 0 && filterValue.length === 0;
-  // contacts.length === 0 && this.props.filterValue.length === 0;
-  //   console.log('isContactsEmpty', isContactsEmpty);
-
   const contactFound = contacts.length > 0;
-  //   console.log('contactFound', contactFound);
+
+  const filtred = () => {
+    const filterNormalize = filterValue.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filterNormalize)
+    );
+  };
 
   const renderContacts = contacts => {
     return contacts.map(({ id, number, name }) => (
       <StyledContactsLi key={id}>
         <IconButton onClick={() => dispatch(deleteContact(id))}>
-          {deleteIcon}
+          {BUTTON_ICONS.deleteIcon}
         </IconButton>
-        <IconButton onClick={() => getContactToEdit(id)}>{editIcon}</IconButton>
+        <IconButton onClick={() => getContactToEdit(id)}>
+          {BUTTON_ICONS.editIcon}
+        </IconButton>
         <ContactItem name={name} number={number} id={id} />
       </StyledContactsLi>
     ));
@@ -40,8 +38,8 @@ export const ContactsListRedux = ({
 
   const contactsBlock = (
     <Section title="Contacts List">
-      <Filter value={filterValue} onChange={filterChange} />
-      <StyledContactsUl>{renderContacts(contacts)}</StyledContactsUl>
+      <Filter />
+      <StyledContactsUl>{renderContacts(filtred())}</StyledContactsUl>
       {contactFound || <Notification message="Not found" />}
     </Section>
   );
