@@ -2,7 +2,6 @@
 import { PureComponent } from 'react';
 import { BackDrop, ModalWindow, ModalTitle } from './Modal.styled';
 import { EditorRedux } from 'components/Editor';
-import editorContext from '../Context/editor-context';
 import { FiXCircle } from 'react-icons/fi';
 
 export class Modal extends PureComponent {
@@ -28,7 +27,6 @@ export class Modal extends PureComponent {
 
   render() {
     const { typeCloseButton, close, editorOption } = this.props;
-    // console.log(theme);
     return (
       <BackDrop onClick={this.backDropClickClose}>
         <ModalWindow>

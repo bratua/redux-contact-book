@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { addContact, editContact } from 'redux/slices/contactsSlice';
 import { changeFilter } from 'redux/slices/filterSlice';
 import { FiEdit, FiSave, FiTrash2, FiPlusCircle } from 'react-icons/fi';
 import { ContactsListRedux } from 'components/PhoneBook/ContactsList';
-import { EditorRedux } from 'components/Editor';
 import { Modal } from 'components/Modal';
 import { IconButton } from 'components/Button';
+import { AppStyled } from './App.styled';
 
 const BUTTON_ICONS = {
   addIcon: <FiPlusCircle size="30" style={{ verticalAlign: 'middle' }} />,
@@ -102,7 +102,7 @@ export const AppRedux = () => {
       };
 
   return (
-    <>
+    <AppStyled>
       <IconButton type="button" onClick={() => toggleModal()}>
         {BUTTON_ICONS.addIcon} ADD
       </IconButton>
@@ -123,6 +123,6 @@ export const AppRedux = () => {
           filterChange={filterChange}
         />
       )}
-    </>
+    </AppStyled>
   );
 };

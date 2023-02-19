@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteContact, editContact } from 'redux/slices/contactsSlice';
+import { deleteContact } from 'redux/slices/contactsSlice';
 import { Section } from 'components/Section';
 import { StyledContactsLi, StyledContactsUl } from './ContactsList.styled';
 import { Notification } from 'components/PhoneBook/Notification';
