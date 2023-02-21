@@ -11,7 +11,7 @@ export const contactsSlice = createSlice({
     },
 
     deleteContact: (state, action) => {
-      console.log('DELETE action.payload', action.payload);
+      // console.log('DELETE action.payload', action.payload);
       const indexToDelete = state.contactsData.findIndex(
         contact => contact.id === action.payload
       );
@@ -22,8 +22,8 @@ export const contactsSlice = createSlice({
       const indexToUpdate = state.contactsData.findIndex(
         contact => contact.id === action.payload.id
       );
-      console.log('indexToUpdate', indexToUpdate);
-      console.log('editContact', action.payload);
+      // console.log('indexToUpdate', indexToUpdate);
+      // console.log('editContact', action.payload);
 
       state.contactsData.splice(indexToUpdate, 1, action.payload);
     },

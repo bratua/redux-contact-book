@@ -7,7 +7,7 @@ export const filterSlice = createSlice({
   initialState: { filterData: '' },
   reducers: {
     changeFilter: (state, action) => {
-      console.log(state.filterData);
+      // console.log(state.filterData);
       state.filterData = action.payload;
     },
   },

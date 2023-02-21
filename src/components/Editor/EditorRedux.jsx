@@ -1,34 +1,55 @@
 import { Formik, Form } from 'formik';
-import * as yup from 'yup';
+import { addContact, editContact } from 'redux/slices/contactsSlice';
 import { nanoid } from 'nanoid';
 import { IconButton } from 'components/Button';
 import { TitleFields, Fields, ErrorStyled } from './Editor.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { schema } from 'options/options';
+import { INITIAL_VALUES } from 'constants/constants';
 
 const nameId = nanoid();
 const numberId = nanoid();
 
-export const EditorRedux = ({ icon, initialValues, updateData }) => {
-  const schema = yup.object().shape({
-    name: yup
-      .string()
-      .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/)
-      .required('Введите имя'),
-    number: yup
-      .string()
-      .matches(
-        /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/
-      )
-      .required('Введите номер'),
-  });
+export const EditorRedux = ({
+  icon,
+  editorOption = INITIAL_VALUES,
+  onClose,
+}) => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.contactsData);
+
+  const checkSameName = name => {
+    return contacts.find(el => el.name === name);
+  };
+
+  const handleAddContact = ({ name, number, id }) => {
+    dispatch(addContact({ name, number, id }));
+    onClose();
+  };
+
+  const handleEditContact = ({ name, number, id }) => {
+    dispatch(editContact({ name, number, id }));
+    onClose();
+  };
 
   const handleSubmit = ({ name, number, id }, actionsFormik) => {
-    updateData({ name, number, id }); //function from APP (add or edit)
+    if (id) {
+      handleEditContact({ name, number, id });
+      return;
+    }
+
+    if (checkSameName(name)) {
+      return alert(`${name} уже в списке контактов!`);
+    }
+
+    handleAddContact({ name, number, id: nanoid() });
+
     actionsFormik.resetForm();
   };
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={editorOption}
       validationSchema={schema}
       onSubmit={handleSubmit}
     >

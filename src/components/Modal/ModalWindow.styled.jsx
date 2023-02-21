@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const BackDrop = styled.div`
+export const BackDropStyled = styled.div`
   position: absolute;
   top: 0px;
   left: 0px;
@@ -9,7 +9,7 @@ export const BackDrop = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
 `;
 
-export const ModalWindow = styled.div`
+export const ModalWindowStyled = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;

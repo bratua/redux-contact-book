@@ -6,14 +6,14 @@ import { Notification } from 'components/PhoneBook/Notification';
 import { Filter } from 'components/PhoneBook/Filter';
 import { IconButton } from 'components/Button';
 import { ContactItem } from 'components/PhoneBook/ContactsList';
-import { BUTTON_ICONS } from 'constants/constants';
+import { BUTTON_ICONS, MODAL_NAMES } from 'constants/constants';
+import { Modal } from 'components/Modal';
 
-export const ContactsListRedux = ({ getContactToEdit }) => {
+export const ContactsListRedux = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts.contactsData);
   const filterValue = useSelector(state => state.filter.filterData);
   const isContactsEmpty = contacts.length === 0 && filterValue.length === 0;
-  const contactFound = contacts.length > 0;
 
   const filtred = () => {
     const filterNormalize = filterValue.toLowerCase();
@@ -28,14 +28,17 @@ export const ContactsListRedux = ({ getContactToEdit }) => {
         <IconButton onClick={() => dispatch(deleteContact(id))}>
           {BUTTON_ICONS.deleteIcon}
         </IconButton>
-        <IconButton onClick={() => getContactToEdit(id)}>
-          {BUTTON_ICONS.editIcon}
-        </IconButton>
+        <Modal
+          editorOption={{ id, number, name }}
+          icon={BUTTON_ICONS.editIcon}
+          modalName={MODAL_NAMES.edit}
+        />
         <ContactItem name={name} number={number} id={id} />
       </StyledContactsLi>
     ));
   };
 
+  const contactFound = renderContacts(filtred()).length > 0;
   const contactsBlock = (
     <Section title="Contacts List">
       <Filter />
@@ -43,5 +46,6 @@ export const ContactsListRedux = ({ getContactToEdit }) => {
       {contactFound || <Notification message="Not found" />}
     </Section>
   );
+
   return isContactsEmpty || contactsBlock;
 };

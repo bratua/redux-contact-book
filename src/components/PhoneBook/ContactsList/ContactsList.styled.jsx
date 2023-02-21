@@ -13,7 +13,7 @@ export const StyledContactsLi = styled.li`
     margin-left: 10px;
     width: 30px;
     height: 30px;
-    border-color: red;
+    border-color: green;
     background-color: rgba(150, 60, 60, 0.6);
     border-radius: 50%;
     cursor: pointer;
